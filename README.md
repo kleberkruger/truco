@@ -2,17 +2,16 @@
 
 ## 📚 Sobre o Projeto
 
-Este projeto tem como objetivo desenvolver um jogo simplificado de **Truco Paulista**, utilizando os conceitos de **Programação Orientada a Objetos (POO)**.
+Este projeto tem como objetivo desenvolver um jogo simplificado de **Truco Paulista**, utilizando os conceitos de **Algoritmos e Programação II e o básico de Programação Orientada a Objetos**.
 
 A aplicação deverá permitir que um jogador humano dispute uma partida de Truco contra um jogador controlado por uma **Inteligência Artificial (IA)**.
 
 O foco principal do projeto não é apenas fazer o jogo funcionar, mas também aplicar corretamente conceitos como:
 
 - Classes e objetos;
-- Encapsulamento;
-- Herança e polimorfismo, quando apropriado;
 - Abstração;
 - Enumerações;
+- Funções e procedimentos
 - Composição entre objetos;
 - Separação de responsabilidades;
 - Organização e modelagem de um domínio;
