@@ -2,7 +2,7 @@
 
 ## 📚 Sobre o Projeto
 
-Este projeto tem como objetivo desenvolver um jogo simplificado de **Truco Paulista**, utilizando os conceitos de **Algoritmos e Programação II e o básico de Programação Orientada a Objetos**.
+Este projeto tem como objetivo desenvolver um jogo simplificado de **Truco Paulista**, utilizando os conceitos de **Algoritmos e Programação II** e o básico de **Programação Orientada a Objetos**.
 
 A aplicação deverá permitir que um jogador humano dispute uma partida de Truco contra um jogador controlado por uma **Inteligência Artificial (IA)**.
 
