@@ -52,6 +52,7 @@ class Naipe(Enum):
 
     
 class Carta:
+
     def __init__(self, rank: Rank, naipe: Naipe):
         self.rank = rank
         self.naipe = naipe
