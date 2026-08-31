@@ -66,28 +66,61 @@ Neste projeto, inicialmente, a partida deverá terminar quando um jogador atingi
 
 # 🂠 O Baralho
 
-O jogo utilizará um baralho simplificado com **40 cartas**, composto por quatro naipes:
+O jogo deverá permitir a utilização de duas variações do baralho utilizadas no Truco:
 
-- ♦️ Ouros;
-- ♥️ Copas;
-- ♠️ Espadas;
-- ♣️ Paus.
+- **Baralho sujo**;
+- **Baralho limpo**.
 
-Os valores das cartas serão:
+O jogo deverá ser configurado para utilizar uma dessas duas opções antes do início da partida.
+
+## 🃏 Baralho Sujo
+
+O **baralho sujo** utilizará todas as cartas abaixo:
 
 ```text
 4, 5, 6, 7, Q, J, K, A, 2 e 3
 ```
 
-As cartas **8, 9 e 10 não fazem parte do baralho utilizado**.
+As cartas **8, 9 e 10 não fazem parte do baralho**.
 
-Cada valor deverá existir nos quatro naipes.
-
-Portanto:
+Como existem **10 valores** e **4 naipes**, o baralho sujo será composto por:
 
 ```text
 10 valores × 4 naipes = 40 cartas
 ```
+
+## 🃏 Baralho Limpo
+
+No **baralho limpo**, as cartas de menor valor serão removidas do jogo.
+
+Portanto, serão retiradas as cartas:
+
+```text
+4, 5, 6 e 7
+```
+
+O baralho será composto apenas pelas seguintes cartas:
+
+```text
+Q, J, K, A, 2 e 3
+```
+
+Como existem **6 valores** e **4 naipes**, o baralho limpo será composto por:
+
+```text
+6 valores × 4 naipes = 24 cartas
+```
+
+## ♦️♠️♥️♣️ Naipes
+
+Independentemente do tipo de baralho escolhido, as cartas deverão possuir quatro naipes:
+
+- ♦️ **Ouros**;
+- ♠️ **Espadas**;
+- ♥️ **Copas**;
+- ♣️ **Paus**.
+
+Cada valor disponível deverá existir nos quatro naipes.
 
 ---
 
@@ -95,18 +128,27 @@ Portanto:
 
 No Truco, as cartas não seguem a ordem tradicional de um baralho.
 
-Para este projeto simplificado, as cartas deverão possuir a seguinte ordem de força:
+Para este projeto, a ordem de força das cartas deverá ser:
 
 ```text
 3 > 2 > A > K > J > Q > 7 > 6 > 5 > 4
 ```
 
+No caso do **baralho sujo**, todas essas cartas estarão disponíveis.
+
+Já no **baralho limpo**, como as cartas `4`, `5`, `6` e `7` são removidas, a ordem de força utilizada será:
+
+```text
+3 > 2 > A > K > J > Q
+```
+
 Ou seja:
 
-- O `3` é a carta mais forte;
-- O `4` é a carta mais fraca.
+- O `3` é sempre a carta mais forte;
+- O `4` é a carta mais fraca quando utilizado o **baralho sujo**;
+- No **baralho limpo**, a `Q` é a carta mais fraca disponível.
 
-Exemplo:
+### Exemplo
 
 ```text
 Jogador: 2♠
