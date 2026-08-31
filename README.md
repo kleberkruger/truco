@@ -1120,7 +1120,7 @@ Os alunos que desejarem ir além da implementação mínima poderão adicionar:
 
 # 🏆 Considerações Finais
 
-Este projeto tem como objetivo permitir a aplicação prática dos conceitos de **Programação Orientada a Objetos** em um problema mais complexo e próximo de um sistema real.
+Este projeto tem como objetivo permitir a aplicação prática dos conceitos de **Algoritmos e Programação II** e dos princípios básicos de **Programação Orientada a Objetos** em um problema mais complexo e próximo de um sistema real.
 
 Além da correta implementação das regras do jogo, será avaliada a qualidade da modelagem e da organização do código.
 
