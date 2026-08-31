@@ -35,7 +35,7 @@ A partida deverá seguir as regras básicas do Truco, envolvendo:
 - Pedidos de Truco;
 - Decisões tomadas pela Inteligência Artificial.
 
-O jogo deverá ser desenvolvido utilizando **Programação Orientada a Objetos**, evitando uma implementação baseada exclusivamente em funções e variáveis globais.
+O jogo deverá ser desenvolvido utilizando os conceitos de **Algoritmos e Programação II**, e os conceitos básicos da **Programação Orientada a Objetos**, evitando uma implementação baseada exclusivamente em funções e variáveis globais.
 
 ---
 
