@@ -711,6 +711,8 @@ class TelaTrucoPyQt(QMainWindow):
         p = self.sessao.partida
         b_box = QVBoxLayout()
         b_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        b_box.setContentsMargins(0, 0, 0, 0)
+        b_box.setSpacing(8)
 
         is_vez = p.jogador_da_vez is bot
         is_parceiro = bot in p.equipes[0].jogadores
@@ -724,14 +726,15 @@ class TelaTrucoPyQt(QMainWindow):
             lbl_avatar.setObjectName('avatar-parceiro')
         else:
             lbl_avatar.setObjectName('avatar-adversario')
-        b_box.addWidget(lbl_avatar)
+        b_box.addWidget(lbl_avatar, 0, Qt.AlignmentFlag.AlignCenter)
 
         lbl_name = QLabel(f'{bot.nome}{" (" + bot.nome_parceiro() + ")" if is_parceiro else ""}')
+        lbl_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
         if is_parceiro:
             lbl_name.setObjectName('nome-parceiro')
         else:
             lbl_name.setObjectName('nome-adversario')
-        b_box.addWidget(lbl_name)
+        b_box.addWidget(lbl_name, 0, Qt.AlignmentFlag.AlignCenter)
 
         h_cards = QHBoxLayout()
         h_cards.setSpacing(2)
