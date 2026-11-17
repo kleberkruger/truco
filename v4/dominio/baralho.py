@@ -1,152 +1,68 @@
-from enum import StrEnum
+"""Baralho: criação, embaralhamento e distribuição de cartas."""
+
 import random
-
-
-class Rank(StrEnum):
-    QUATRO = '4'
-    CINCO = '5'
-    SEIS = '6'
-    SETE = '7'
-    DAMA = 'Q'
-    VALETE = 'J'
-    REI = 'K'
-    AS = 'A'
-    DOIS = '2'
-    TRES = '3'
-
-    @property
-    def forca(self) -> int:
-        return list(Rank).index(self)
-
-    @classmethod
-    def baralho_sujo(cls) -> list['Rank']:
-        return list(cls)
-
-    @classmethod
-    def baralho_limpo(cls) -> list['Rank']:
-        removidos = {cls.QUATRO, cls.CINCO, cls.SEIS, cls.SETE}
-        return [rank for rank in cls if rank not in removidos]
-
-    @classmethod
-    def baralho(cls, limpo: bool = True) -> list['Rank']:
-        return cls.baralho_limpo() if limpo else cls.baralho_sujo()
-
-    def __str__(self) -> str:
-        return self.value
-
-    def __repr__(self) -> str:
-        return str(self)
-
-
-class Naipe(StrEnum):
-    OUROS = '♦'
-    ESPADAS = '♠'
-    COPAS = '♥'
-    PAUS = '♣'
-
-    @property
-    def forca(self) -> int:
-        return list(Naipe).index(self)
-
-    def __str__(self) -> str:
-        return self.value
-
-    def __repr__(self) -> str:
-        return str(self)
-
-
-class Carta:
-    def __init__(self, rank: Rank, naipe: Naipe):
-        self._rank = rank
-        self._naipe = naipe
-        self._manilha = False
-
-    def tornar_comum(self) -> None:
-        self._manilha = False
-
-    def tornar_manilha(self) -> None:
-        self._manilha = True
-
-    @property
-    def rank(self) -> Rank:
-        return self._rank
-
-    @property
-    def naipe(self) -> Naipe:
-        return self._naipe
-
-    @property
-    def manilha(self) -> bool:
-        return self._manilha
-
-    @property
-    def nome(self) -> str:
-        return f'{self._rank} de {self._naipe}'
-
-    @property
-    def forca(self) -> int:
-        if self.manilha:
-            return len(Rank) * 10 + self._naipe.forca
-        return self._rank.forca * 10
-
-    def __lt__(self, other: object):
-        if not isinstance(other, Carta):
-            return NotImplemented
-        return self.forca < other.forca
-
-    def __eq__(self, other: object):
-        if not isinstance(other, Carta):
-            return NotImplemented
-        return self._rank == other._rank and self._naipe == other._naipe
-
-    def __hash__(self) -> int:
-        return hash((self._rank, self._naipe))
-
-    def __str__(self) -> str:
-        return f'[{self._rank} {self._naipe}]'
-
-    def __repr__(self) -> str:
-        return str(self)
+from dominio.carta import Carta
+from dominio.naipe import Naipe
+from dominio.rank import Rank
 
 
 class Baralho:
-    def __init__(self, limpo: bool = True):
+    """Gerencia o baralho: cria cartas, embaralha e distribui mãos.
+
+    Recria as cartas a cada distribuição para permitir múltiplas mãos.
+    """
+
+    def __init__(self, limpo: bool = True) -> None:
         self._limpo = limpo
-        self._cartas = {
-            rank: [Carta(rank, naipe) for naipe in Naipe]
-            for rank in Rank.baralho(limpo)
-        }
 
     @property
     def limpo(self) -> bool:
         return self._limpo
 
-    @property
-    def cartas(self) -> list[Carta]:
-        return [c for lista in self._cartas.values() for c in lista]
+    def _criar_cartas(self) -> list[Carta]:
+        """Cria um novo conjunto de cartas."""
+        return [
+            Carta(rank, naipe)
+            for rank in Rank.valores(self._limpo)
+            for naipe in Naipe
+        ]
 
-    def embaralhar(self) -> list[Carta]:
-        cartas = self.cartas
+    def definir_manilha(self, vira: Carta, todas_cartas: list[Carta]) -> None:
+        """Define as manilhas com base na carta virada.
+
+        A manilha é o rank seguinte ao da carta virada, ciclicamente.
+        """
+        ranks = Rank.valores(self._limpo)
+        rank_manilha = ranks[(ranks.index(vira.rank) + 1) % len(ranks)]
+        for carta in todas_cartas:
+            if carta.rank == rank_manilha:
+                carta.tornar_manilha()
+
+    def distribuir(self, jogadores_por_equipe: int = 1) -> tuple[list[list[Carta]], Carta]:
+        """Embaralha e distribui 3 cartas para cada jogador.
+
+        Retorna:
+            - Lista de mãos (uma por jogador)
+            - Carta virada
+        """
+        if not 1 <= jogadores_por_equipe <= 3:
+            raise ValueError('Jogadores por equipe deve ser 1, 2 ou 3')
+        if jogadores_por_equipe == 3 and self._limpo:
+            raise ValueError('Trios exigem baralho sujo')
+
+        # Recria cartas a cada distribuição
+        cartas = self._criar_cartas()
         for carta in cartas:
             carta.tornar_comum()
         random.shuffle(cartas)
-        return cartas
 
-    def distribuir_cartas(self, jogadores_por_equipe: int = 1) -> tuple[list[list[Carta]], Carta]:
-        if not 1 <= jogadores_por_equipe <= 3:
-            raise ValueError('O número de jogadores por equipe deve ser entre 1 e 3')
-        if jogadores_por_equipe == 3 and self.limpo:
-            raise ValueError('O número máximo de jogadores por equipe no truco limpo é 2')
-        cartas = self.embaralhar()
-        maos = [
-            [cartas.pop() for _ in range(3)]
-            for _ in range(jogadores_por_equipe * 2)
-        ]
+        total_jogadores = jogadores_por_equipe * 2
+        maos: list[list[Carta]] = []
+        for _ in range(total_jogadores):
+            mao = [cartas.pop() for _ in range(3)]
+            maos.append(mao)
         vira = cartas.pop()
-        self.definir_manilha(vira)
+        # Define manilha em TODAS as cartas (mãos + vira + resto)
+        todas = [c for m in maos for c in m] + [vira] + cartas
+        self.definir_manilha(vira, todas)
         return maos, vira
-
-    def definir_manilha(self, vira: Carta) -> None:
-        ranks = Rank.baralho(self.limpo)
-        for carta in self._cartas[ranks[(ranks.index(vira.rank) + 1) % len(ranks)]]:
-            carta.tornar_manilha()
