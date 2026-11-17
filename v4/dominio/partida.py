@@ -177,6 +177,14 @@ class Partida:
                 self._concluir_mao(ganhador)
         return resultado
 
+    def pode_correr(self, jogador: Jogador) -> bool:
+        return self.mao_atual.pode_correr(jogador)
+
+    def correr(self, jogador: Jogador) -> None:
+        """Jogador corre a mão atual, concedendo-a à equipe adversária."""
+        equipe_vencedora = self.mao_atual.correr(jogador)
+        self._concluir_mao(equipe_vencedora)
+
     def pode_pedir_aumento(self, jogador: Jogador) -> bool:
         return self.mao_atual.pode_pedir_aumento(jogador)
 

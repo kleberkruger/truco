@@ -12,15 +12,22 @@ import random
 from dominio.carta import Carta
 from dominio.equipe import Equipe
 from dominio.estado import EstadoPartida
-from dominio.jogador import Jogador
+from dominio.jogador import Jogador, Sexo
 from dominio.partida import Partida
 from dominio.vaza import ResultadoVaza
 from estrategia.ia import IA, Dificuldade
 from aplicacao.evento import Evento
 
 
-# Nomes padrão para bots
-NOMES_PADRAO = ['Você', 'Diogo', 'Vinícius', 'Rhana', 'Thiago', 'Alan']
+# Nomes padrão para bots (nome, sexo)
+NOMES_PADRAO: list[tuple[str, Sexo]] = [
+    ('Você', Sexo.MASCULINO),
+    ('Diogo', Sexo.MASCULINO),
+    ('Rhana', Sexo.FEMININO),
+    ('Vinícius', Sexo.MASCULINO),
+    ('Thiago', Sexo.MASCULINO),
+    ('Alan', Sexo.MASCULINO),
+]
 
 
 class Sessao:
@@ -42,7 +49,7 @@ class Sessao:
         modalidade: int = 2,
         limpo: bool = True,
         dificuldade: Dificuldade = Dificuldade.MEDIO,
-        nomes: list[str] | None = None,
+        nomes: list[tuple[str, Sexo]] | None = None,
         seed: int | None = None,
     ) -> None:
         if modalidade not in (1, 2, 3):
@@ -59,10 +66,10 @@ class Sessao:
         self._dificuldade = dificuldade
 
         # Criar jogador humano
-        self._humano = Jogador(nomes[0])
+        self._humano = Jogador(nomes[0][0], nomes[0][1])
 
         # Criar todos os jogadores
-        jogadores = [Jogador(n) for n in nomes[:total_jogadores]]
+        jogadores = [Jogador(nome, sexo) for nome, sexo in nomes[:total_jogadores]]
         jogadores[0] = self._humano
 
         # Distribuir em equipes alternadas
@@ -145,6 +152,19 @@ class Sessao:
             raise ValueError('Não é possível aumentar agora')
         valor = self._partida.pedir_aumento(self._humano)
         self._emitir('pedido', f'Você pediu {valor}!')
+
+    def pode_correr(self) -> bool:
+        """Verifica se o humano pode correr a mão atual."""
+        if self._partida.estado != EstadoPartida.JOGANDO:
+            return False
+        return self._partida.pode_correr(self._humano)
+
+    def correr(self) -> None:
+        """Humano corre a mão atual, concedendo-a aos adversários."""
+        if not self.pode_correr():
+            raise ValueError('Não é possível correr neste momento')
+        self._partida.correr(self._humano)
+        self._emitir('correr', 'Você correu da mão!')
 
     def responder(self, aceitar: bool) -> None:
         """Humano responde a um pedido de truco."""

@@ -69,7 +69,7 @@ class Terminal:
                     j.jogador in p.equipes[0].jogadores
                     and j.jogador is not humano
                 )
-                tag = ' (Parceiro)' if is_parceiro else ''
+                tag = f' ({j.jogador.nome_parceiro()})' if is_parceiro else ''
                 print(f'  • {j.jogador.nome}{tag}: {j.carta}{destaque}')
 
         if p.estado == EstadoPartida.JOGANDO and p.jogador_da_vez:
@@ -91,7 +91,7 @@ class Terminal:
                     if j is humano:
                         tag = ' (Você)'
                     elif j in p.equipes[0].jogadores:
-                        tag = ' (Parceiro)'
+                        tag = f' ({j.nome_parceiro()})'
                     fmt.append(f'{j.nome}{tag}')
                 print(f'Faltam jogar: {", ".join(fmt)}')
 
@@ -168,10 +168,17 @@ class Terminal:
                 opcoes = 'Digite o número da carta'
                 if self.sessao.pode_trucar():
                     opcoes += ' ou T para pedir truco'
+                if self.sessao.pode_correr():
+                    opcoes += ' ou C para correr'
                 resp = input(f'\nSua vez. {opcoes}: ').strip().lower()
                 if resp in {'t', 'truco'}:
                     try:
                         self.sessao.pedir_truco()
+                    except ValueError as err:
+                        print(f'Não foi possível: {err}')
+                elif resp in {'c', 'correr'}:
+                    try:
+                        self.sessao.correr()
                     except ValueError as err:
                         print(f'Não foi possível: {err}')
                 else:

@@ -1,17 +1,25 @@
 """Jogador: participante individual do jogo."""
 
+import enum
 from uuid import UUID, uuid4
 from dominio.carta import Carta
+
+
+class Sexo(enum.StrEnum):
+    """Sexo gramatical do jogador para concordância de termos como parceiro/parceira."""
+    MASCULINO = 'M'
+    FEMININO = 'F'
 
 
 class Jogador:
     """Representa um jogador com nome, ID único e mão de cartas."""
 
-    def __init__(self, nome: str) -> None:
+    def __init__(self, nome: str, sexo: Sexo = Sexo.MASCULINO) -> None:
         nome = nome.strip()
         if not nome:
             raise ValueError('O nome do jogador não pode ser vazio')
         self._nome = nome
+        self._sexo = sexo
         self._id = uuid4()
         self._cartas: list[Carta] = []
 
@@ -20,8 +28,16 @@ class Jogador:
         return self._nome
 
     @property
+    def sexo(self) -> Sexo:
+        return self._sexo
+
+    @property
     def id(self) -> UUID:
         return self._id
+
+    def nome_parceiro(self) -> str:
+        """Retorna 'Parceiro' ou 'Parceira' conforme o sexo do jogador."""
+        return 'Parceira' if self._sexo == Sexo.FEMININO else 'Parceiro'
 
     @property
     def cartas(self) -> tuple[Carta, ...]:

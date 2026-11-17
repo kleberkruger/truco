@@ -503,13 +503,22 @@ class TelaTrucoPyQt(QMainWindow):
         m_layout.addLayout(centro_mid)
         m_layout.addStretch()
 
-        # Sul — cartas do humano + botão truco
+        # Sul — botão correr (esquerda) + cartas do humano + botão truco (direita)
         sul_box = QHBoxLayout()
         sul_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.btn_correr = QPushButton('CORRER')
+        self.btn_correr.setObjectName('btn-dark')
+        self.btn_correr.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.btn_correr.setFixedSize(140, 50)
+        self.btn_correr.clicked.connect(self._correr)
+        sul_box.addWidget(self.btn_correr)
+        sul_box.addSpacing(16)
+
         self.layout_leque_humano = QHBoxLayout()
         self.layout_leque_humano.setSpacing(-24)
         sul_box.addLayout(self.layout_leque_humano)
-        sul_box.addSpacing(20)
+        sul_box.addSpacing(16)
 
         self.btn_truco = QPushButton('TRUCO!')
         self.btn_truco.setObjectName('btn-gold')
@@ -517,6 +526,7 @@ class TelaTrucoPyQt(QMainWindow):
         self.btn_truco.setFixedSize(140, 50)
         self.btn_truco.clicked.connect(self._pedir_truco)
         sul_box.addWidget(self.btn_truco)
+
         m_layout.addLayout(sul_box)
 
         main_layout.addWidget(self.mesa_feltro, stretch=3)
@@ -716,7 +726,7 @@ class TelaTrucoPyQt(QMainWindow):
             lbl_avatar.setObjectName('avatar-adversario')
         b_box.addWidget(lbl_avatar)
 
-        lbl_name = QLabel(f'{bot.nome}{" (Parceiro)" if is_parceiro else ""}')
+        lbl_name = QLabel(f'{bot.nome}{" (" + bot.nome_parceiro() + ")" if is_parceiro else ""}')
         if is_parceiro:
             lbl_name.setObjectName('nome-parceiro')
         else:
@@ -841,6 +851,10 @@ class TelaTrucoPyQt(QMainWindow):
             else {3: 'SEIS!', 6: 'NOVE!', 9: 'DOZE!'}.get(p.valor_mao, 'AUMENTAR!')
         )
 
+        # Botão correr
+        pode_correr = self.sessao.pode_correr()
+        self.btn_correr.setEnabled(pode_correr)
+
     def _jogar_carta_humano(self, idx: int) -> None:
         try:
             self.sessao.jogar(idx)
@@ -851,6 +865,13 @@ class TelaTrucoPyQt(QMainWindow):
     def _pedir_truco(self) -> None:
         try:
             self.sessao.pedir_truco()
+            self._atualizar_interface()
+        except ValueError:
+            pass
+
+    def _correr(self) -> None:
+        try:
+            self.sessao.correr()
             self._atualizar_interface()
         except ValueError:
             pass

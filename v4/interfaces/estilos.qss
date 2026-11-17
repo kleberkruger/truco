@@ -65,6 +65,10 @@ QPushButton#btn-dark:hover {
 QPushButton#btn-dark:pressed {
     background-color: rgba(71, 85, 105, 0.95);
 }
+QPushButton#btn-dark:disabled {
+    background-color: rgba(30, 41, 59, 0.4);
+    color: #475569;
+}
 QListWidget#hud-ticker {
     background-color: rgba(15, 20, 32, 0.7);
     border-radius: 20px;

@@ -211,6 +211,26 @@ class Mao:
     # Truco / Aposta
     # ------------------------------------------------------------------
 
+    def pode_correr(self, jogador: Jogador) -> bool:
+        """Verifica se o jogador pode correr a mão atual."""
+        if self._estado != EstadoPartida.JOGANDO:
+            return False
+        if jogador is not self.jogador_da_vez:
+            return False
+        if self._mao_onze is not None:
+            return False
+        return True
+
+    def correr(self, jogador: Jogador) -> int:
+        """Jogador corre a mão atual, concedendo-a à equipe adversária.
+
+        Retorna o índice da equipe vencedora (a adversária).
+        """
+        if not self.pode_correr(jogador):
+            raise ValueError('Não é possível correr neste momento')
+        equipe = self.indice_equipe(jogador)
+        return 1 - equipe
+
     def pode_pedir_aumento(self, jogador: Jogador) -> bool:
         """Verifica se o jogador pode pedir truco."""
         if self._estado != EstadoPartida.JOGANDO:
