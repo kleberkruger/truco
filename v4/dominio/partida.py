@@ -71,7 +71,7 @@ class Partida:
         return len(self._equipes[0])
 
     @property
-    def pontos(self) -> tuple[int, int]:
+    def pontos(self) -> tuple[int, ...]:
         return tuple(self._pontos)
 
     @property
