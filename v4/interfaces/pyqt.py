@@ -415,17 +415,20 @@ class TelaTrucoPyQt(QMainWindow):
 
         lbl_logo = QLabel('TRUCO PAULISTA')
         lbl_logo.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        lbl_logo.setStyleSheet('color: #fbbf24; font-size: 32px; font-weight: 900; letter-spacing: 2px;')
+        lbl_logo.setAutoFillBackground(False)
+        lbl_logo.setStyleSheet('background-color: transparent; color: #fbbf24; font-size: 32px; font-weight: 900; letter-spacing: 2px;')
         p_layout.addWidget(lbl_logo)
 
         lbl_sub = QLabel('Versão 5 — Arquitetura Modular')
         lbl_sub.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        lbl_sub.setStyleSheet('color: #64748b; font-size: 14px; margin-bottom: 24px;')
+        lbl_sub.setAutoFillBackground(False)
+        lbl_sub.setStyleSheet('background-color: transparent; color: #64748b; font-size: 14px; margin-bottom: 24px;')
         p_layout.addWidget(lbl_sub)
 
         # Modalidade
         lbl_mod = QLabel('MODALIDADE')
-        lbl_mod.setStyleSheet('color: #94a3b8; font-size: 11px; font-weight: 800;')
+        lbl_mod.setAutoFillBackground(False)
+        lbl_mod.setStyleSheet('background-color: transparent; color: #94a3b8; font-size: 11px; font-weight: 800;')
         p_layout.addWidget(lbl_mod)
 
         grid_mod = QHBoxLayout()
@@ -444,7 +447,8 @@ class TelaTrucoPyQt(QMainWindow):
 
         # Baralho
         lbl_bar = QLabel('BARALHO')
-        lbl_bar.setStyleSheet('color: #94a3b8; font-size: 11px; font-weight: 800;')
+        lbl_bar.setAutoFillBackground(False)
+        lbl_bar.setStyleSheet('background-color: transparent; color: #94a3b8; font-size: 11px; font-weight: 800;')
         p_layout.addWidget(lbl_bar)
 
         grid_bar = QHBoxLayout()
@@ -464,7 +468,8 @@ class TelaTrucoPyQt(QMainWindow):
 
         # Dificuldade
         lbl_diff = QLabel('DIFICULDADE')
-        lbl_diff.setStyleSheet('color: #94a3b8; font-size: 11px; font-weight: 800;')
+        lbl_diff.setAutoFillBackground(False)
+        lbl_diff.setStyleSheet('background-color: transparent; color: #94a3b8; font-size: 11px; font-weight: 800;')
         p_layout.addWidget(lbl_diff)
 
         grid_diff = QHBoxLayout()
@@ -614,46 +619,49 @@ class TelaTrucoPyQt(QMainWindow):
         sidebar.setFixedWidth(280)
         side_layout = QVBoxLayout(sidebar)
         side_layout.setContentsMargins(0, 0, 0, 0)
-        side_layout.setSpacing(16)
+        side_layout.setSpacing(24)
 
         hud_score = QFrame()
         hud_score.setObjectName('hud-side-container')
         score_vlayout = QVBoxLayout(hud_score)
-        score_vlayout.setContentsMargins(18, 18, 18, 18)
-        score_vlayout.setSpacing(14)
+        score_vlayout.setContentsMargins(28, 28, 28, 28)
+        score_vlayout.setSpacing(20)
 
-        info_box = QHBoxLayout()
-        info_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        lbl_dot = QLabel('●')
-        lbl_dot.setStyleSheet('color: #fbbf24; font-size: 10px;')
-        self.lbl_mao_info = QLabel('MÃO 1  •  VALE 1 PTS')
-        self.lbl_mao_info.setStyleSheet('color: #e2e8f0; font-weight: 800; font-size: 12px;')
-        info_box.addWidget(lbl_dot)
-        info_box.addSpacing(6)
-        info_box.addWidget(self.lbl_mao_info)
-        score_vlayout.addLayout(info_box)
+        # Título de pontuação geral
+        lbl_pontuacao_geral = QLabel('PONTUAÇÃO GERAL')
+        lbl_pontuacao_geral.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        lbl_pontuacao_geral.setAutoFillBackground(False)
+        lbl_pontuacao_geral.setStyleSheet('background-color: transparent; color: #fbbf24; font-size: 11px; font-weight: 800;')
+        score_vlayout.addWidget(lbl_pontuacao_geral)
+        score_vlayout.addSpacing(10)
 
+        # Placar: Sua equipe X Adversários
         scores_container = QHBoxLayout()
         scores_container.setSpacing(10)
 
         eq0_box = QVBoxLayout()
         eq0_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
         lbl_e0 = QLabel('SUA EQUIPE')
-        lbl_e0.setStyleSheet('color: #94a3b8; font-size: 10px; font-weight: 800;')
+        lbl_e0.setAutoFillBackground(False)
+        lbl_e0.setStyleSheet('background-color: transparent; color: #94a3b8; font-size: 10px; font-weight: 800;')
         self.lbl_score_eq0 = QLabel('0')
-        self.lbl_score_eq0.setStyleSheet('color: #fbbf24; font-size: 36px; font-weight: 900;')
+        self.lbl_score_eq0.setAutoFillBackground(False)
+        self.lbl_score_eq0.setStyleSheet('background-color: transparent; color: #fbbf24; font-size: 36px; font-weight: 900;')
         eq0_box.addWidget(lbl_e0, 0, Qt.AlignmentFlag.AlignCenter)
         eq0_box.addWidget(self.lbl_score_eq0, 0, Qt.AlignmentFlag.AlignCenter)
 
-        lbl_div = QLabel('─')
-        lbl_div.setStyleSheet('color: rgba(255, 255, 255, 0.15); font-size: 16px;')
+        lbl_div = QLabel('×')
+        lbl_div.setAutoFillBackground(False)
+        lbl_div.setStyleSheet('background-color: transparent; color: rgba(255, 255, 255, 0.3); font-size: 20px; font-weight: 800;')
 
         eq1_box = QVBoxLayout()
         eq1_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
         lbl_e1 = QLabel('ADVERSÁRIOS')
-        lbl_e1.setStyleSheet('color: #94a3b8; font-size: 10px; font-weight: 800;')
+        lbl_e1.setAutoFillBackground(False)
+        lbl_e1.setStyleSheet('background-color: transparent; color: #94a3b8; font-size: 10px; font-weight: 800;')
         self.lbl_score_eq1 = QLabel('0')
-        self.lbl_score_eq1.setStyleSheet('color: #f8fafc; font-size: 36px; font-weight: 900;')
+        self.lbl_score_eq1.setAutoFillBackground(False)
+        self.lbl_score_eq1.setStyleSheet('background-color: transparent; color: #f8fafc; font-size: 36px; font-weight: 900;')
         eq1_box.addWidget(lbl_e1, 0, Qt.AlignmentFlag.AlignCenter)
         eq1_box.addWidget(self.lbl_score_eq1, 0, Qt.AlignmentFlag.AlignCenter)
 
@@ -661,34 +669,67 @@ class TelaTrucoPyQt(QMainWindow):
         scores_container.addWidget(lbl_div, 0, Qt.AlignmentFlag.AlignCenter)
         scores_container.addLayout(eq1_box)
         score_vlayout.addLayout(scores_container)
+        score_vlayout.addSpacing(12)
 
-        # Vazas ganhas na mão atual (menor, abaixo do placar geral)
-        vazas_box = QHBoxLayout()
-        vazas_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        vazas_box.setSpacing(8)
+        # Separador
+        separator = QFrame()
+        separator.setFrameShape(QFrame.Shape.HLine)
+        separator.setFrameShadow(QFrame.Shadow.Sunken)
+        separator.setStyleSheet('background-color: rgba(255, 255, 255, 0.08); max-height: 1px;')
+        score_vlayout.addWidget(separator)
+        score_vlayout.addSpacing(2)
 
-        lbl_vazas_sep = QLabel('─')
-        lbl_vazas_sep.setStyleSheet('color: rgba(255, 255, 255, 0.1); font-size: 10px;')
-        vazas_box.addWidget(lbl_vazas_sep, 0, Qt.AlignmentFlag.AlignCenter)
+        # Componente do placar da mão
+        mao_frame = QFrame()
+        mao_frame.setStyleSheet('background-color: transparent;')
+        mao_layout = QVBoxLayout(mao_frame)
+        mao_layout.setContentsMargins(12, 12, 12, 12)
+        mao_layout.setSpacing(8)
+
+        self.lbl_mao_info = QLabel('MÃO 1  •  VALE 1 PTS')
+        self.lbl_mao_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.lbl_mao_info.setAutoFillBackground(False)
+        self.lbl_mao_info.setStyleSheet('background-color: transparent; color: #fbbf24; font-size: 14px; font-weight: 900;')
+        mao_layout.addWidget(self.lbl_mao_info)
+        mao_layout.addSpacing(4)
+
+        # Vazas da mão
+        vazas_row = QHBoxLayout()
+        vazas_row.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        vazas_row.setSpacing(10)
 
         lbl_vazas_label = QLabel('VAZAS')
-        lbl_vazas_label.setStyleSheet('color: #64748b; font-size: 9px; font-weight: 700;')
-        vazas_box.addWidget(lbl_vazas_label, 0, Qt.AlignmentFlag.AlignCenter)
+        lbl_vazas_label.setAutoFillBackground(False)
+        lbl_vazas_label.setStyleSheet('background-color: transparent; color: #64748b; font-size: 9px; font-weight: 700;')
+        vazas_row.addWidget(lbl_vazas_label, 0, Qt.AlignmentFlag.AlignCenter)
+
+        vazas_sep1 = QLabel('─')
+        vazas_sep1.setAutoFillBackground(False)
+        vazas_sep1.setStyleSheet('background-color: transparent; color: rgba(255, 255, 255, 0.1); font-size: 10px;')
+        vazas_row.addWidget(vazas_sep1, 0, Qt.AlignmentFlag.AlignCenter)
 
         self.lbl_vazas_eq0 = QLabel('0')
-        self.lbl_vazas_eq0.setStyleSheet('color: #fbbf24; font-size: 14px; font-weight: 900;')
-        vazas_box.addWidget(self.lbl_vazas_eq0, 0, Qt.AlignmentFlag.AlignCenter)
+        self.lbl_vazas_eq0.setAutoFillBackground(False)
+        self.lbl_vazas_eq0.setStyleSheet('background-color: transparent; color: #fbbf24; font-size: 16px; font-weight: 900;')
+        vazas_row.addWidget(self.lbl_vazas_eq0, 0, Qt.AlignmentFlag.AlignCenter)
 
         lbl_vazas_dash = QLabel('─')
-        lbl_vazas_dash.setStyleSheet('color: rgba(255, 255, 255, 0.2); font-size: 12px;')
-        vazas_box.addWidget(lbl_vazas_dash, 0, Qt.AlignmentFlag.AlignCenter)
+        lbl_vazas_dash.setAutoFillBackground(False)
+        lbl_vazas_dash.setStyleSheet('background-color: transparent; color: rgba(255, 255, 255, 0.2); font-size: 12px;')
+        vazas_row.addWidget(lbl_vazas_dash, 0, Qt.AlignmentFlag.AlignCenter)
 
         self.lbl_vazas_eq1 = QLabel('0')
-        self.lbl_vazas_eq1.setStyleSheet('color: #f8fafc; font-size: 14px; font-weight: 900;')
-        vazas_box.addWidget(self.lbl_vazas_eq1, 0, Qt.AlignmentFlag.AlignCenter)
+        self.lbl_vazas_eq1.setAutoFillBackground(False)
+        self.lbl_vazas_eq1.setStyleSheet('background-color: transparent; color: #f8fafc; font-size: 16px; font-weight: 900;')
+        vazas_row.addWidget(self.lbl_vazas_eq1, 0, Qt.AlignmentFlag.AlignCenter)
 
-        vazas_box.addWidget(lbl_vazas_sep, 0, Qt.AlignmentFlag.AlignCenter)
-        score_vlayout.addLayout(vazas_box)
+        vazas_sep2 = QLabel('─')
+        vazas_sep2.setAutoFillBackground(False)
+        vazas_sep2.setStyleSheet('background-color: transparent; color: rgba(255, 255, 255, 0.1); font-size: 10px;')
+        vazas_row.addWidget(vazas_sep2, 0, Qt.AlignmentFlag.AlignCenter)
+
+        mao_layout.addLayout(vazas_row)
+        score_vlayout.addWidget(mao_frame)
 
         btn_menu = QPushButton('SAIR DA ARENA')
         btn_menu.setObjectName('btn-dark')

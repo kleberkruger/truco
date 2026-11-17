@@ -1,8 +1,8 @@
 """Truco Paulista — Versão 5.
 
 Ponto de entrada principal. Escolha a interface desejada:
-  --interface terminal  → Interface de texto
-  --interface pyqt      → Interface gráfica PyQt6 (padrão)
+  --interface terminal → Interface de texto
+  --interface PyQt6 → Interface gráfica PyQt6 (padrão)
 """
 
 import argparse
