@@ -29,10 +29,10 @@ class Jogador:
         return tuple(self._cartas)
 
     def receber_cartas(self, cartas: list[Carta]) -> None:
-        """Recebe exatamente 3 cartas para a mão."""
+        """Recebe exatamente 3 cartas para a mão, ordenadas por força crescente."""
         if len(cartas) != 3:
             raise ValueError('Cada jogador deve receber exatamente três cartas')
-        self._cartas = list(cartas)
+        self._cartas = sorted(cartas, key=lambda c: c.forca)
 
     def jogar(self, indice: int) -> Carta:
         """Joga a carta no índice especificado e a remove da mão."""

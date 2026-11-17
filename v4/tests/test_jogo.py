@@ -320,6 +320,41 @@ class TesteJogador(unittest.TestCase):
                 Carta(Rank.REI, Naipe.PAUS),
             ])
 
+    def test_receber_cartas_ordenadas_por_forca(self) -> None:
+        """As cartas devem ser ordenadas por força crescente ao receber."""
+        # Envia cartas em ordem aleatória
+        cartas = [
+            Carta(Rank.TRES, Naipe.COPAS),   # Mais forte
+            Carta(Rank.AS, Naipe.OUROS),     # Mais fraca
+            Carta(Rank.DOIS, Naipe.ESPADAS), # Meio
+        ]
+        j = Jogador('Teste')
+        j.receber_cartas(cartas)
+        mao = j.cartas
+        # Deve estar ordenada: AS < DOIS < TRES
+        self.assertEqual(mao[0].rank, Rank.AS)
+        self.assertEqual(mao[1].rank, Rank.DOIS)
+        self.assertEqual(mao[2].rank, Rank.TRES)
+        # Força crescente
+        self.assertLess(mao[0].forca, mao[1].forca)
+        self.assertLess(mao[1].forca, mao[2].forca)
+
+    def test_receber_cartas_com_manilha_ordenada(self) -> None:
+        """Manilha deve ficar no final da mão por ser a mais forte."""
+        cartas = [
+            Carta(Rank.AS, Naipe.ESPADAS),   # Manilha (mais forte)
+            Carta(Rank.AS, Naipe.OUROS),     # Normal
+            Carta(Rank.DOIS, Naipe.COPAS),   # Normal
+        ]
+        cartas[0].tornar_manilha()
+        j = Jogador('Teste')
+        j.receber_cartas(cartas)
+        mao = j.cartas
+        # A manilha deve estar no último índice
+        self.assertTrue(mao[2].manilha)
+        self.assertFalse(mao[0].manilha)
+        self.assertFalse(mao[1].manilha)
+
     def test_jogar_carta_por_indice(self) -> None:
         """Jogar carta remove do índice correto."""
         j = Jogador('Teste')
