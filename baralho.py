@@ -31,11 +31,8 @@ class Rank(StrEnum):
     def baralho(cls, limpo=True) -> list['Rank']:
         return cls.baralho_limpo() if limpo else cls.baralho_sujo()
 
-    def __str__(self):
-        return self.value
-
     def __repr__(self):
-        return str(self)
+        return self.value
 
 
 class Naipe(StrEnum):
@@ -48,11 +45,8 @@ class Naipe(StrEnum):
     def forca(self):
         return list(Naipe).index(self)
 
-    def __str__(self):
-        return self.value
-
     def __repr__(self):
-        return str(self)
+        return self.value
 
 
 class Carta:
@@ -98,13 +92,10 @@ class Carta:
     def __eq__(self, other: object):
         if not isinstance(other, Carta):
             return NotImplemented
-        return self._rank == other._rank and self._naipe == other._naipe
-
-    def __str__(self):
-        return f"[{self._rank} {self._naipe}]"
+        return self.forca == other.forca
 
     def __repr__(self):
-        return str(self)
+        return f"[{self._rank} {self._naipe}]"
 
 
 class Baralho:
