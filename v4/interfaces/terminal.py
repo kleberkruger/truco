@@ -20,7 +20,7 @@ class Terminal:
         *,
         modalidade: int = 2,
         limpo: bool = True,
-        dificuldade: str = Dificuldade.MEDIO,
+        dificuldade: Dificuldade = Dificuldade.MEDIO,
         seed: int | None = None,
     ) -> None:
         self.sessao = Sessao(

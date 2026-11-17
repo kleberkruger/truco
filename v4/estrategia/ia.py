@@ -8,22 +8,25 @@ A IA decide:
 Os níveis de dificuldade ajustam a qualidade das decisões.
 """
 
+import enum
 import random
+from enum import auto
+
 from dominio.carta import Carta
 from dominio.jogador import Jogador
 
 
-class Dificuldade:
+class Dificuldade(enum.IntEnum):
     """Níveis de dificuldade da IA."""
-    FACIL = 'facil'
-    MEDIO = 'medio'
-    DIFICIL = 'dificil'
+    FACIL = 1
+    MEDIO = 2
+    DIFICIL = 3
 
 
 class EstrategiaCarta:
     """Decide qual carta a IA deve jogar."""
 
-    def __init__(self, dificuldade: str = Dificuldade.MEDIO, rng: random.Random | None = None) -> None:
+    def __init__(self, dificuldade: Dificuldade = Dificuldade.MEDIO, rng: random.Random | None = None) -> None:
         self._dificuldade = dificuldade
         self._rng = rng or random.Random()
 
@@ -120,7 +123,7 @@ class EstrategiaCarta:
 class EstrategiaAposta:
     """Decide se a IA deve pedir/aceitar truco."""
 
-    def __init__(self, dificuldade: str = Dificuldade.MEDIO, rng: random.Random | None = None) -> None:
+    def __init__(self, dificuldade: Dificuldade = Dificuldade.MEDIO, rng: random.Random | None = None) -> None:
         self._dificuldade = dificuldade
         self._rng = rng or random.Random()
 
@@ -177,14 +180,14 @@ class IA:
     Combina estratégia de carta e estratégia de aposta.
     """
 
-    def __init__(self, dificuldade: str = Dificuldade.MEDIO, seed: int | None = None) -> None:
+    def __init__(self, dificuldade: Dificuldade = Dificuldade.MEDIO, seed: int | None = None) -> None:
         self._rng = random.Random(seed)
         self._carta = EstrategiaCarta(dificuldade, self._rng)
         self._aposta = EstrategiaAposta(dificuldade, self._rng)
         self._dificuldade = dificuldade
 
     @property
-    def dificuldade(self) -> str:
+    def dificuldade(self) -> Dificuldade:
         return self._dificuldade
 
     def escolher_carta(

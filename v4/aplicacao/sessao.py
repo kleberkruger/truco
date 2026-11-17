@@ -20,7 +20,7 @@ from aplicacao.evento import Evento
 
 
 # Nomes padrão para bots
-NOMES_PADRAO = ['Você', 'Luna', 'Theo', 'Maya', 'Davi', 'Nina']
+NOMES_PADRAO = ['Você', 'Diogo', 'Vinícius', 'Rhana', 'Thiago', 'Alan']
 
 
 class Sessao:
@@ -41,7 +41,7 @@ class Sessao:
         self,
         modalidade: int = 2,
         limpo: bool = True,
-        dificuldade: str = Dificuldade.MEDIO,
+        dificuldade: Dificuldade = Dificuldade.MEDIO,
         nomes: list[str] | None = None,
         seed: int | None = None,
     ) -> None:
@@ -120,7 +120,7 @@ class Sessao:
         )
 
     @property
-    def dificuldade(self) -> str:
+    def dificuldade(self) -> Dificuldade:
         return self._dificuldade
 
     # ------------------------------------------------------------------

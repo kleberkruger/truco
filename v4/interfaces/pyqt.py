@@ -273,7 +273,7 @@ class TelaTrucoPyQt(QMainWindow):
         self,
         modalidade: int = 2,
         limpo: bool = True,
-        dificuldade: str = Dificuldade.MEDIO,
+        dificuldade: Dificuldade = Dificuldade.MEDIO,
         seed: int | None = None,
     ) -> None:
         super().__init__()
@@ -382,7 +382,7 @@ class TelaTrucoPyQt(QMainWindow):
 
         grid_diff = QHBoxLayout()
         grid_diff.setSpacing(10)
-        self.btns_diff: list[tuple[QPushButton, str]] = []
+        self.btns_diff: list[tuple[QPushButton, Dificuldade]] = []
         for nome, d in [('Fácil', Dificuldade.FACIL), ('Médio', Dificuldade.MEDIO), ('Difícil', Dificuldade.DIFICIL)]:
             btn = QPushButton(nome)
             btn.setCheckable(True)
@@ -417,24 +417,30 @@ class TelaTrucoPyQt(QMainWindow):
             self.limpo = limpo
         self._atualizar_estilos_menu()
 
-    def _set_dificuldade(self, d: str) -> None:
+    def _set_dificuldade(self, d: Dificuldade) -> None:
         self.dificuldade = d
         self._atualizar_estilos_menu()
 
     def _atualizar_estilos_menu(self) -> None:
         for btn, m in self.btns_mod:
             btn.setChecked(m == self.modalidade)
-            btn.setObjectName('menu-btn-selected' if m == self.modalidade else 'menu-btn-unselected')
+            btn.setProperty('menu-state', 'selected' if m == self.modalidade else 'unselected')
+            btn.style().unpolish(btn)
+            btn.style().polish(btn)
 
         self.btn_limpo.setChecked(self.limpo)
         self.btn_sujo.setChecked(not self.limpo)
         self.btn_limpo.setEnabled(self.modalidade != 3)
         for b, act in [(self.btn_limpo, self.limpo), (self.btn_sujo, not self.limpo)]:
-            b.setObjectName('menu-btn-selected' if act else 'menu-btn-unselected')
+            b.setProperty('menu-state', 'selected' if act else 'unselected')
+            b.style().unpolish(b)
+            b.style().polish(b)
 
         for btn, d in self.btns_diff:
             btn.setChecked(d == self.dificuldade)
-            btn.setObjectName('menu-btn-selected' if d == self.dificuldade else 'menu-btn-unselected')
+            btn.setProperty('menu-state', 'selected' if d == self.dificuldade else 'unselected')
+            btn.style().unpolish(btn)
+            btn.style().polish(btn)
 
     # ------------------------------------------------------------------
     # Arena de jogo
