@@ -365,7 +365,7 @@ QFrame#menu-panel {
    Menu principal — botões de seleção (estado dinâmico)
    ------------------------------------------------------------------ */
 
-QPushButton#menu-btn-selected {
+QPushButton[menu-state="selected"] {
     background-color: #fbbf24;
     color: #000;
     font-weight: 800;
@@ -373,9 +373,10 @@ QPushButton#menu-btn-selected {
     padding: 10px;
 }
 
-QPushButton#menu-btn-unselected {
+QPushButton[menu-state="unselected"] {
     background-color: transparent;
     color: #94a3b8;
+    font-weight: 700;
     border-radius: 10px;
     padding: 10px;
 }
